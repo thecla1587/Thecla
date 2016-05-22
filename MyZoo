@@ -1,0 +1,20 @@
+public class Zoo{
+
+  public static void main(String[] args){  
+  
+    Animal[] my_zoo = new Animal[5];
+    my_zoo[0] = new Animal("The duck","quack");
+    my_zoo[1] = new Animal("The sheep","barr");
+    my_zoo[2] = new Animal("The pig","oink");
+    my_zoo[3] = new Animal("The horse","whinny");
+    my_zoo[4] = new Animal("The lion","roar");
+  
+    all_sounds(my_zoo);
+  }
+
+  public static void all_sounds(Animal[] my_zoo){
+    for(int i = 0; i < 5; i++){
+      System.out.printf("%s goes %s.%n", my_zoo[i].name, my_zoo[i].sound);
+    }
+  }
+}
