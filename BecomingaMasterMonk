@@ -1,0 +1,123 @@
+import java.util.Scanner;
+public class BecomingaMasterMonk{
+  
+  public static void main(String[] args){
+    Scanner in = new Scanner(System.in);
+    
+    System.out.println("Nice to meet you. What is your name?");
+    String p = in.nextLine();
+    
+    System.out.println("Boss ; "+p+", you were a really good worker. I am sorry to hear that you decided to leave us and become a monk. I hope you become a master monk.");
+    System.out.println(p+" must earn 100 Zen points by doing good deeds. The goal is to become a master monk before "+p+" runs out of money.");
+    
+    int m = 100; //money
+    int z = 0; //Zen points
+    int t = 0; //turn
+    int g = 0;
+    int bm = 0; //money from a big temple
+    int bz = 0; //Zen from a big temple
+    int sz = 0; //Zen from a small temple
+    int b = 0; //a big temple (If the player purchase a big temple, 'b' will bacome '1' and then the player can't purchase more big temples.)
+    int s = 0; //a small temple (If the player purchase a small temple, 's' will bacome '1' and then the player can't purchase more small temples.)
+    
+    while(0 <= z && z < 100 && 0 <= m){
+      if(g == 0){
+        System.out.printf(p+" has $"+m+" and "+z+" Zen points.%n"
+                           + "Now, what would you like to do?%n"
+                           + "If you want to meditate(earn $0, get +1 Zen), press 1.%n"
+                           + "If you want to help someone(-$10, get +5 Zen), press 2.%n"
+                           + "If you want to work at a company(earn $50, -30 Zen), press 3.%n"
+                           + "If you want to purchase a temple, press 4.%n");
+        
+        Scanner e = new Scanner(System.in);
+        int input = in.nextInt();
+        
+        if(input < 0 || input > 4){
+          System.out.println("Please input only from 1 to 4.");
+          continue;
+        }
+        if(input == 1){
+          m = m + bm + 0;
+          z = z + bz + sz + 1;
+          t = t + 1;
+        }
+        if(input == 2){
+          if(m < 10){
+            System.out.println(p+" runs out of money! "+p+" fail to become a master monk!");
+            break;
+          }
+          m = m + bm - 10;
+          z = z + bz + sz + 5;
+          t = t + 1;
+        }
+        if(input==3){
+          if(z < 30){
+            System.out.println("You don't have enough Zen.");
+            continue;
+          }
+          m = m + bm + 50;
+          z = z + bz + sz - 30;
+          t = t + 1;
+        }  
+        if(input==4){
+          t = t + 1;
+          g = g + 1;   
+        }
+      }
+      
+      if(g == 1){
+        System.out.printf("If you purchase a BIG temple, you will earn $15 and get 5 Zen each turn.%n"
+                           + "If you purchase a SMALL temple, you will get 3 Zen each turn.%n"
+                           + "Which temple do you want? A big(-$70, press 1) or small(-$30, press 2) temple?%n");
+        
+        Scanner q = new Scanner(System.in);
+        int w = in.nextInt();
+        
+        if(w < 0 || w > 2){
+          System.out.println("Please input 1 or 2.");
+          continue;
+        }
+        if(w == 1 && b > 0){
+          System.out.println("You already have the big temple. You can't purchase more big temples.");
+        }
+        if(w == 1 && b == 0){
+          if(m < 70){
+            System.out.println(p+" runs out of money! "+p+" fail to become a master monk!");
+            break;
+          }
+          m = m - 70;
+          b = b + 1;
+          System.out.println("You spend $70 buying the big temple. You have $"+m+" and "+z+" Zen.");
+          bm = 15;
+          bz = 5;
+          m = m + bm;
+          z = z + bz + sz;
+          System.out.println("From now, you can earn $15 and get 5 Zen each turn.");
+        }
+        
+        if(w == 2 && s > 0){
+          System.out.println("You already have the small temple. You can't purchase more small temples.");
+        }
+        if(w == 2 && s == 0){
+          if(m < 30){
+            System.out.println(p+" runs out of money! "+p+" fail to become a master monk!");
+            break;
+          }
+          m = m - 30;
+          s = s + 1;
+          System.out.println("You spend $30 buying the small temple. You have $"+m+" and "+z+" Zen.");
+          sz = 3;
+          m = m + bm;
+          z = z + bz + sz;
+          System.out.println("From now, you can get 3 Zen each turn.");
+        }
+        g = 0;
+      }
+      
+    }
+         
+    if (m >= 0 && z >= 100){
+      System.out.println("Congrats! Now, "+p+" is a master monk in "+t+" turns!");
+    }
+  }
+}
